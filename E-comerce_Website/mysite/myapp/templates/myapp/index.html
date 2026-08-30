@@ -1,0 +1,7 @@
+This is the index page 
+{% for product in products %}
+    <p>{{product.name}}</p>
+    <p>{{product.price}}</p>
+    <p>{{product.description}}</p>
+    <img src="{{product.images.url}}" />
+{% endfor %}

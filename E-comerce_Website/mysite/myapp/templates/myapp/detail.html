@@ -1,0 +1,53 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+
+<div>
+    # Product Image
+    <div>
+        <img class="w-80 h-80" src="{{product.images.url}}" alt="{{product.name}}">
+    </div>
+
+    # Product Details
+    <div>
+        <h1>{{product.name}}</h1>
+
+        <div>(12,321)</div>
+        <p>{{product.price}}</p>
+        <p>Inclusive of all taxes</p>
+        <ul>
+            <li>{{product.description}}</li>
+        </ul>
+
+    </div>
+
+    # Buy Box
+    <div>
+        <p>{{product.price}}</p>
+        <div>
+            <select name="" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
+        <p>FREE delivery by Tomorrow </p>
+        {% if product.stock %}
+            <p>In Stock</p>
+        {% else %}
+            <p>Out of Stock</p>
+        {% endif %}
+
+        <button>Add to Cart</button>
+        <button>Buy Now</button>
+        <p>
+            Sold by: Bio Official Store and Fulfilled by Amazon
+        </p>
+
+    </div>
+    
+</div>
+
+{% endblock %}
+

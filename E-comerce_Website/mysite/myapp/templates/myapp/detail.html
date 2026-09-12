@@ -3,29 +3,29 @@
 {% block body %}
 
 <div class="max-w-7xl mx-auto grid grid-cols-3">
-    # Product Image
+    <!-- Product Image -->
     <div class="col-span-1">
         <img class="w-80 h-80 rounded-lg border shadow-sm" src="{{product.images.url}}" alt="{{product.name}}">
     </div>
 
-    # Product Details
+    <!-- Product Details -->
     <div class="col-span-1 space-y-2">
         <h1 class="text-2xl font-semibold text-gray-900">{{product.name}}</h1>
 
         <div class="text-yellow-500">(12,321 ratings)</div>
         <p class="text-3xl text-green-500">${{product.price}}</p>
-        <p class="text-sm text-green font-medium">Inclusive of all taxes</p>
+        <p class="text-sm text-green-500 font-medium">Inclusive of all taxes</p>
         <ul>
             <li>{{product.description}}</li>
         </ul>
 
     </div>
 
-    # Buy Box
+    <!-- Buy Box -->
     <div class="col-span-1 border rounded-lg p-6 space-y-4 shadow-sm">
-        <p class="text-2xl font-semibold text-900">$ {{product.price}}</p>
+        <p class="text-2xl font-semibold text-gray-900">$ {{product.price}}</p>
         <div>
-            <select name="id">
+            <select id="select" name="id">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -39,8 +39,8 @@
             <p>Out of Stock</p>
         {% endif %}
 
-        <button id ="atc" class="w-full bg-yellow-400 text-black font-semibold py-2 rounded-lg">Add to Cart</button>
-        <button class="w-full bg-gray-400 text-white font-semibold py-2 rounded-lg">Buy Now</button>
+        <button id="add-to-cart" value="{{product.id}}" class="w-full bg-green-500 text-white font-semibold py-2 rounded-lg">Add to Cart</button>
+        <button id="atc" value="{{product.id}}" class="w-full bg-gray-400 text-white font-semibold py-2 rounded-lg">Buy Now</button>
         <p class="text-sm text-green-500">
             Sold by: Bio Official Store and Fulfilled by Amazon
         </p>
@@ -51,10 +51,30 @@
 
 <script>
     $(document).on('click', '#atc', function(e){
-        console.log("Add to Cart button clicked");
+        console.log("Buy Now button clicked");
         $.ajax({
             type: "POST",
             url: '{% url "cart_add" %}',
+            data:{
+                csrfmiddlewaretoken:"{{csrf_token}}",
+                product_id: $(this).val(),
+                product_quantity: $("#select option:selected").text(),
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).on('click', '#add-to-cart', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '{% url "cart_add" %}',
+            data:{
+                csrfmiddlewaretoken:"{{csrf_token}}",
+                product_id: $(this).val(),
+                product_quantity: $("#select option:selected").text(),
+            }
         });
     });
 </script>

@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes,force_str
 from .token import account_activation_token
 from django.contrib.auth.models import User
-from .forms import loginForm
+from .forms import loginForm, UserUpdateForm
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -80,3 +80,16 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+
+def profile(request):
+
+    if request.method=="POST":
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('index')
+
+    user_form = UserUpdateForm(instance=request.user)
+
+    return render(request,'users/profile.html',{'user_form': user_form})

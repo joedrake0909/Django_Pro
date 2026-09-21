@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'myapp',
     'cart',
     'users',
+    'orders',
     'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
